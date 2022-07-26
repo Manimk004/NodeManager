@@ -21,25 +21,18 @@ const ProjectSchmea =
         type: String,
         required: true,
       },
-      managers: {
-        type: String,
-        required: true,
+      manager : {
+              type:Object,
+       
+      },
+      member:{
+        type: Array,
+        
       },
    
       createdDate: { type: Date, default: Date.now },
   });
-//   async function authenticate({ username, password }) {
-//     const user = await User.findOne({ username });
-//     if (user && bcrypt.compareSync(password, user.hash)) {
-//         const token = jwt.sign({ sub: user.id }, config.secret, { expiresIn: '7d' });
-//         return {
-//             ...user.toJSON(),
-//             token
-//         };
-//     }
-// }
 
-// Export the modelname
 module.exports =
   mongoose.model(
     "Project",

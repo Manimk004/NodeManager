@@ -12,7 +12,7 @@ projectRoutes.post(
     ProjectController.getProjects
   );
   projectRoutes.get(
-    "/getProject",
+    "/getProject/:id",
     ProjectController.getProjectById
   );
   projectRoutes.get(

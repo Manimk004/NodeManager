@@ -12,9 +12,12 @@ managerRoutes.get(
   ManagerController.getManagers
 );
 managerRoutes.get(
-  "/getManager",
+  "/getManager/:id",
   ManagerController.getManagerById
 );
+
+
+
 managerRoutes.get(
   "/searchManagers",
   ManagerController.searchManagers

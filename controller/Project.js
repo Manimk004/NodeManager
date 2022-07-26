@@ -4,10 +4,22 @@ exports.addProject = async (
   res
 ) => {
   try {
+    console.log(req.body);
+    const {} =req.body;
     const newProject =
-      new Project(req.body);
+      new Project({
+        title: req.body.title,
+        discription:req.body.discription
+
+      });
     const savedProject =
-      await newProject.save();
+      await newProject.save().then((result)=>{
+        if(result){
+//do something
+        }else{
+
+        }
+      });
     if (!savedProject)
       return res.send({
         error:
@@ -51,33 +63,27 @@ exports.getProjects = async (
       });
   }
 };
-exports.getProjectById =
-  async (req, res) => {
-    try {
-      const id = req.query.id;
-      const Project =
-        await Project.findById(
-          id
-        );
+exports.getProjectById = async (req, res) => {
+  try {
+    const id = req.params.id;
 
-      if (!Project)
+    await Project.findById(id)
+      .then((result) => {
+        console.log(result, "result");
+        if (!result){
         return res.send({
-          error:
-            "Can't get Project for this Id",
-        });
-      return res
-        .status(200)
-        .send(Project);
-    } catch (error) {
-      console.log(error);
-      return res
-        .status(500)
-        .send({
-          error:
-            error.message,
-        });
-    }
-  };
+          error: "Can't get Project for this Id",
+        });}
+        return res.status(200).send(result);
+      })
+      .catch((err) => console.log(err));
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      error: error.message,
+    });
+  }
+};
 
 
 exports.searchProjects =
