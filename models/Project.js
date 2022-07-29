@@ -19,7 +19,10 @@ const ProjectSchmea =
   
       endate: {
         type: String,
-        required: true,
+        
+      },
+      isCompleted:{
+        type:Boolean
       },
       manager : {
               type:Object,

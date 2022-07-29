@@ -20,7 +20,7 @@ projectRoutes.post(
     ProjectController.searchProjects
   );
   projectRoutes.post(
-    "/updateProject",
+    "/updateProject/:id",
     ProjectController.updateProject
   );
 

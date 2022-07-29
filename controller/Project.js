@@ -150,11 +150,12 @@ exports.updateProject =
   async (req, res) => {
     try {
       const update = req.body;
-      if (update._id) {
+      const id = req.params.id;
+      if (id) {
         const updatedProject =
           await Project.findByIdAndUpdate(
             {
-              _id: update._id,
+              _id: id,
             },
             { $set: update },
             { new: true }

@@ -15,15 +15,12 @@ managerRoutes.get(
   "/getManager/:id",
   ManagerController.getManagerById
 );
-
-
-
 managerRoutes.get(
   "/searchManagers",
   ManagerController.searchManagers
 );
 managerRoutes.post(
-  "/updateManager",
+  "/updateManager/:id",
   ManagerController.updateManager
 );
 

@@ -1,4 +1,5 @@
 const Manager = require("../models/Manager");
+const { updateMany } = require("../models/Project");
 exports.addManager = async (req, res) => {
   try {
     const newManager = new Manager(req.body);
@@ -16,8 +17,6 @@ exports.addManager = async (req, res) => {
   }
 };
 
-
-
 exports.getManagers = async (req, res) => {
   try {
     const allManager = await Manager.find({});
@@ -33,7 +32,6 @@ exports.getManagers = async (req, res) => {
     });
   }
 };
-
 exports.getManagerById = async (req, res) => {
   try {
     const id = req.params.id;
@@ -55,6 +53,58 @@ exports.getManagerById = async (req, res) => {
     });
   }
 };
+exports.updateManager = async (req, res) => {
+  try {
+ 
+    const update = req.body;
+    const id =req.params.id;
+    console.log(id);
+    console.log(update);
+    if (id) {
+      const updatedManager =
+        await Manager.findByIdAndUpdate(
+          {
+            _id: id,
+          },
+          { $set: update },
+          { new: true }
+        );
+      return res.send(
+        updatedManager
+      );
+    } else {
+      return res
+        .status(500)
+        .send({
+          error:
+            "Not Object Id received",
+        });
+    }
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .send(error);
+  }
+};
+// exports.updateManager = function(req, res) {
+//   // Update a note identified by the noteId in the request
+//   console.log(req.params.id);
+//   Manager.findById(req.params.id, function(err, note) {
+//       if(err) {
+//           res.status(500).send({message: "Could not find a note with id " + req.params.id});
+//       }
+//       Manager.title = req.body.title;
+//       Manager.content = req.body.content;
+//       Manager.save(function(err, data){
+//           if(err) {
+//               res.status(500).send({message: "Could not update note with id " + req.params.id});
+//           } else {
+//               res.send(data);
+//           }
+//       });
+//   });
+// };
 exports.searchManagers = async (req, res) => {
   try {
     const searchvalue = req.query.search;
@@ -82,28 +132,6 @@ exports.searchManagers = async (req, res) => {
         error: "Can't get Manager for this search query",
       });
     return res.status(200).send(searchedManager);
-  } catch (error) {
-    console.log(error);
-    return res.status(500).send(error);
-  }
-};
-exports.updateManager = async (req, res) => {
-  try {
-    const update = req.body;
-    if (update._id) {
-      const updatedManager = await Manager.findByIdAndUpdate(
-        {
-          _id: update._id,
-        },
-        { $set: update },
-        { new: true }
-      );
-      return res.send(updatedManager);
-    } else {
-      return res.status(500).send({
-        error: "Not Object Id received",
-      });
-    }
   } catch (error) {
     console.log(error);
     return res.status(500).send(error);
