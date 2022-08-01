@@ -28,10 +28,10 @@ const ProjectSchmea =
               type:Object,
        
       },
-      member:{
-        type: Array,
+      // member:{
+      //   type: Array,
         
-      },
+      // },
    
       createdDate: { type: Date, default: Date.now },
   });
