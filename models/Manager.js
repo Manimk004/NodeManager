@@ -16,6 +16,10 @@ const ManagerSchmea =
       type: String,
       required: true,
     },
+    Password: {
+      type: String,
+      required: true,
+    },
     Phone: {
         type: String,
         required: true,

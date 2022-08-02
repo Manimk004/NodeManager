@@ -2,7 +2,10 @@ const express = require("express");
 const app = express();
 const managerRoutes = require("./routes/index");
 const projectRoutes = require("./routes/project");
+ const auth = require("./routes/auth.routes");
 const mongoose = require("mongoose");
+
+
 const PORT =
   process.env.PORT || 4000;
 mongoose
@@ -25,6 +28,10 @@ mongoose
 app.use(express.json());
 app.use("/api/Manager", managerRoutes);
 app.use("/api/Project", projectRoutes);
+app.use("/api/auth", auth);
+// require("routes/auth.routes")(app);
+
+
 app.use(express.json());
 
 app.listen(PORT, () => {

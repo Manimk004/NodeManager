@@ -24,9 +24,6 @@ managerRoutes.post(
   ManagerController.updateManager
 );
 
-managerRoutes.post(
-  "/authenticate",
-  ManagerController.authenticate
-);
+
 
 module.exports = managerRoutes;
