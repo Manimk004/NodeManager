@@ -14,14 +14,16 @@ const ProjectSchmea =
     },
     startdate: {
       type: String,
-      required: true,
+      
     },
-  
       endate: {
         type: String,
         
       },
       isCompleted:{
+        type:Boolean
+      },
+      inPrograss:{
         type:Boolean
       },
       manager : {

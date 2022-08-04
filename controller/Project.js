@@ -1,42 +1,63 @@
+
+const Manager = require("../models/Manager");
 const Project = require("../models/Project");
-exports.addProject = async (
-  req,
-  res
-) => {
+
+exports.addProject = async (req, res) => {
   try {
-    console.log(req.body);
-    const {} =req.body;
-    const newProject =
-      new Project({
-        title: req.body.title,
-        discription:req.body.discription
-
-      });
-    const savedProject =
-      await newProject.save().then((result)=>{
-        if(result){
-//do something
-        }else{
-
-        }
-      });
+    console.log(req, res);
+    const newProject = new Project(req.body);
+    const savedProject = await newProject.save();
     if (!savedProject)
       return res.send({
-        error:
-          "Unable to add new Project ",
+        error: "Unable to add new Project ",
       });
-    return res
-      .status(201)
-      .send(savedProject);
+    return res.status(201).send(savedProject);
   } catch (error) {
     console.log(error);
-    return res
-      .status(500)
-      .send({
-        error: error.message,
-      });
+    return res.status(500).send({
+      error: error.message,
+    });
   }
 };
+
+// exports.addProject = async (
+//   req,
+//   res
+// ) => {
+//   try {
+//     console.log(req.body);
+//     const {} =req.body;
+//     const newProject =
+//       new Project({
+//         title: req.body.title,
+//         discription:req.body.discription
+
+//       });
+//     const savedProject =
+//       await newProject.save().then((result)=>{
+//         if(result){
+// //do something
+//         }else{
+
+//         }
+//       });
+//     if (!savedProject)
+//       return res.send({
+//         error:
+//           "Unable to add new Project ",
+//       });
+//     return res
+//       .status(201)
+//       .send(savedProject);
+//   } catch (error) {
+//     console.log(error);
+//     return res
+//       .status(500)
+//       .send({
+//         error: error.message,
+//       });
+//   }
+// };
 exports.getProjects = async (
   req,
   res

@@ -5,6 +5,7 @@ const auth =
 
 
 const controller = require("../controller/auth.controller");
+//const controller = require("../controller/login");
   auth.post("/signin", controller.signin);
 
   auth.post("/signout", controller.signout);

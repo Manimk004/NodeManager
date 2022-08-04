@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Schema =
   mongoose.Schema;
+  const bcrypt = require("bcrypt");
 
 const ManagerSchmea =
   new Schema({
@@ -19,7 +20,9 @@ const ManagerSchmea =
     Password: {
       type: String,
       required: true,
+      
     },
+    
     Phone: {
         type: String,
         required: true,
@@ -40,7 +43,19 @@ const ManagerSchmea =
       createdDate: { type: Date, default: Date.now },
   });
 
-  
+  ManagerSchmea.pre('save', async function(next)
+  {
+   try{
+      const salt= await bcrypt.genSalt(10)
+      const hashedPassword = await bcrypt.hash(this.Password, salt)
+      this.Password=hashedPassword
+      next()
+   }
+   catch(error)
+   {
+    next(error)
+   }
+  })
 
 
 // Export the modelname

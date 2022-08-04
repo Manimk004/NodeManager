@@ -1,4 +1,3 @@
-
 const config = require("../config/auth.config");
 const manager = require("../models/Manager");
 const Role = require("../models/role.model");
@@ -8,57 +7,47 @@ var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 
 exports.signin = (req, res) => {
-    console.log(req, res);
-    manager.findOne({
-        EmailID: req.body.EmailID,
-        Password: req.body.Password,
+  
+    manager.find({EmailID: req.body.EmailID})
+      .exec()
+      .then(Manager=>
+        {
+            if(Manager.length<1)
+            {
+                return res.status(404).send({ message: "User Not founded." })
+            }
         
-      
-    })
-      .populate("roles", "-__v")
-      .exec((err, Manager) => {
-        if (err) {
-          res.status(500).send({ message: err });
-          return;
-        }
-  
-        if (!Manager) {
-          return res.status(404).send({ message: "User Not found." });
-        }
-  
-        var passwordIsValid = bcrypt.compareSync(
-            req.body.password,
-           
-            Manager.password
-            
-          );
-    
-          if (!passwordIsValid) {
-            return res.status(401).send({ message: "Invalid Password!" });
-          }
-    
+             bcrypt.compare(req.body.Password,Manager[0].Password,(err,result)=>{
+                
 
-    
-        var token = jwt.sign({ id: Manager.id }, config.secret, {
-          expiresIn: 86400, // 24 hours
-        });
-  
-        var authorities = [];
-  
-        for (let i = 0; i < Manager.roles.length; i++) {
-          authorities.push("ROLE_" + Manager.roles[i].FirstName.toUpperCase());
-        }
-  
-        req.session.token = token;
-  
-        res.status(200).send({
-          id: Manager._id,
-          FirstName: Manager.FirstName,
-          EmailID: Manager.EmailID,
-          roles: authorities,
-        });
-      });
-  };
+                if(!result)
+                {
+                    return res.status(401).send({ message: "Invalid Password!" });
+                }
+                if(result)
+                {
+                    const token = jwt.sign({
+                    FirstName: Manager[0].FirstName,
+                    EmailID: Manager[0].EmailID
+                    },
+                    'ssss',
+                    {
+                      expiresIn:"24h"
+                    }
+                    );
+                    res.status(200).json({
+                        FirstName: Manager[0].FirstName,
+                        LastName: Manager[0].LastName,
+                        EmailID: Manager[0].EmailID,
+                        token:token
+                    })
+                }
+                
+            })
+        })
+    }
+      
+
   
   exports.signout = async (req, res) => {
     try {
@@ -68,4 +57,3 @@ exports.signin = (req, res) => {
       this.next(err);
     }
   };
-  
