@@ -39,6 +39,7 @@ exports.signin = (req, res) => {
                         FirstName: Manager[0].FirstName,
                         LastName: Manager[0].LastName,
                         EmailID: Manager[0].EmailID,
+                        Role: Manager[0].Role,
                         token:token
                     })
                 }
