@@ -2,7 +2,9 @@ const express = require("express");
 const app = express();
 const managerRoutes = require("./routes/index");
 const projectRoutes = require("./routes/project");
- const auth = require("./routes/auth.routes");
+const auth = require("./routes/auth.routes");
+const cors = require("cors");
+
 const mongoose = require("mongoose");
 
 
@@ -24,7 +26,12 @@ mongoose
   .catch((err) =>
     console.error(err)
   );
-
+  const corsOpts = {
+  origin: '*',
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type']
+};
+app.use(cors(corsOpts));
 app.use(express.json());
 app.use("/api/Manager", managerRoutes);
 app.use("/api/Project", projectRoutes);
