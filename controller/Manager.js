@@ -138,6 +138,34 @@ exports.searchManagers = async (req, res) => {
   }
 };
 
+exports.deleteManager = async (req, res) => {
+  try {
+  const id = req.params.id;
+  console.log(id);
+  //var id = new mongo.ObjectId(req.body.id);
+  //var delete_id = request.params.id;//your id
+
+  //collection.deleteOne({_id: new mongodb.ObjectID(delete_id.toString())});
+    await Manager.deleteOne({_id: id.toString()})
+      .then((result) => {
+        console.log(result, "result");
+        if (!result){
+        return res.send({
+          error: "Manager Data not deleted",
+        });}
+        return res.status(200).send(result);
+      })
+      .catch((err) => console.log(err));
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      error: error.message,
+    });
+  }
+};
+
+
+
 
 
 

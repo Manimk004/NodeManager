@@ -23,7 +23,13 @@ managerRoutes.post(
   "/updateManager/:id",
   ManagerController.updateManager
 );
-
-
+// managerRoutes.post(
+//   "/deleteManager/:id",
+//   ManagerController.deleteManager
+// );
+managerRoutes.post(
+  "/deleteManager/:id",
+  ManagerController.deleteManager
+);
 
 module.exports = managerRoutes;

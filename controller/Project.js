@@ -20,44 +20,6 @@ exports.addProject = async (req, res) => {
   }
 };
 
-// exports.addProject = async (
-//   req,
-//   res
-// ) => {
-//   try {
-//     console.log(req.body);
-//     const {} =req.body;
-//     const newProject =
-//       new Project({
-//         title: req.body.title,
-//         discription:req.body.discription
-
-//       });
-//     const savedProject =
-//       await newProject.save().then((result)=>{
-//         if(result){
-// //do something
-//         }else{
-
-//         }
-//       });
-//     if (!savedProject)
-//       return res.send({
-//         error:
-//           "Unable to add new Project ",
-//       });
-//     return res
-//       .status(201)
-//       .send(savedProject);
-//   } catch (error) {
-//     console.log(error);
-//     return res
-//       .status(500)
-//       .send({
-//         error: error.message,
-//       });
-//   }
-// };
 exports.getProjects = async (
   req,
   res
@@ -199,3 +161,29 @@ exports.updateProject =
         .send(error);
     }
    };
+   exports.deleteProject = async (req, res) => {
+    try {
+    const id = req.params.id;
+    console.log(id);
+    //var id = new mongo.ObjectId(req.body.id);
+    //var delete_id = request.params.id;//your id
+  
+    //collection.deleteOne({_id: new mongodb.ObjectID(delete_id.toString())});
+      await Project.deleteOne({_id: id.toString()})
+        .then((result) => {
+          console.log(result, "result");
+          if (!result){
+          return res.send({
+            error: "Project Data not deleted",
+          });}
+          return res.status(200).send(result);
+        })
+        .catch((err) => console.log(err));
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send({
+        error: error.message,
+      });
+    }
+  };
+  

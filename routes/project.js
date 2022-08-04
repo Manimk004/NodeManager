@@ -23,6 +23,9 @@ projectRoutes.post(
     "/updateProject/:id",
     ProjectController.updateProject
   );
-
+  projectRoutes.post(
+    "/deleteProject/:id",
+    ProjectController.deleteProject
+  );
   module.exports = projectRoutes;
   
