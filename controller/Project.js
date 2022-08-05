@@ -4,8 +4,11 @@ const Project = require("../models/Project");
 
 exports.addProject = async (req, res) => {
   try {
-    console.log(req, res);
-    const newProject = new Project(req.body);
+    //console.log(req, res);
+    var proj=req.body;
+    proj["managersId"]=req.body.manager.id
+    const newProject = new Project(proj);
+    console.log(proj);
     const savedProject = await newProject.save();
     if (!savedProject)
       return res.send({
