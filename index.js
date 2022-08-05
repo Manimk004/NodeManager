@@ -3,6 +3,7 @@ const app = express();
 const managerRoutes = require("./routes/index");
 const projectRoutes = require("./routes/project");
 const auth = require("./routes/auth.routes");
+const projectmanagerRoutes = require("./routes/getProject");
 const cors = require("cors");
 
 const mongoose = require("mongoose");
@@ -35,6 +36,7 @@ app.use(cors(corsOpts));
 app.use(express.json());
 app.use("/api/Manager", managerRoutes);
 app.use("/api/Project", projectRoutes);
+app.use("/api/getProject", projectmanagerRoutes);
 app.use("/api/auth", auth);
 // require("routes/auth.routes")(app);
 

@@ -26,6 +26,9 @@ const ProjectSchmea =
       inPrograss:{
         type:Boolean
       },
+      managersId:{
+        type: String,
+      },
       manager : {
               type:Object,
        
